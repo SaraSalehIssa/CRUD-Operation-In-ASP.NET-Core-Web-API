@@ -140,7 +140,6 @@ return Ok(product);
             dBContext.Products.Remove(product);
             dBContext.SaveChanges();
             return Ok();
-
         }
     }
 }
