@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using Section1.Data;
+
 namespace Section1
 {
     public class Program
@@ -10,6 +13,11 @@ namespace Section1
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddDbContext<ApplicationDBContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

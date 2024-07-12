@@ -1,9 +1,9 @@
 ﻿namespace Section1.Models
 {
-    public class Student
+    public class Product
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Bio { get; set; }
+        public string Description { get; set; }
     }
 }
