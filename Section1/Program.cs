@@ -1,6 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
-using Section1.Data;
+using Section1.Infrastructure.Data;
 
 namespace Section1
 {
@@ -13,7 +13,7 @@ namespace Section1
             // Add services to the container.
 
             builder.Services.AddControllers();
-            builder.Services.AddDbContext<ApplicationDBContext>(options =>
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
