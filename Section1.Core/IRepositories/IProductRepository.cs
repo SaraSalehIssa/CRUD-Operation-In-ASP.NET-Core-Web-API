@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace Section1.Core.IRepositories
 {
-    public interface IProductRepository
+    public interface IProductRepository: IGenericRepository<Product>
     {
-        public IEnumerable<Product> GetAllProducts();
-        public Product GetById(int id);
-        public void Add(Product model);
-        public void Update(Product model);
-        public void Delete(int id);
+        public void GetProductsFilter();
     }
 }

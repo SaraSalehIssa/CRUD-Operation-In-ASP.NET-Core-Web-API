@@ -3,49 +3,48 @@ using Microsoft.AspNetCore.Mvc;
 using Section1.Core.Entities;
 using Section1.Core.IRepositories;
 using Section1.Infrastructure.Data;
-using Section1.Infrastructure.Repositories;
 
 namespace Section1.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class CategoryController : ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly IProductRepository productRepository;
+        private readonly IGenericRepository<Category> genericRepository;
 
-        public ProductController(ApplicationDbContext dbContext, IProductRepository productRepository)
+        public CategoryController(ApplicationDbContext dbContext, IGenericRepository<Category> genericRepository)
         {
             this.dbContext = dbContext;
-            this.productRepository = productRepository;
+            this.genericRepository = genericRepository;
         }
 
         [HttpGet]
         public ActionResult GetAll()
         {
-            var model = productRepository.GetAll();
+            var model = genericRepository.GetAll();
             return Ok(model);
         }
 
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
-            var model = productRepository.GetById(id);
+            var model = genericRepository.GetById(id);
             return Ok(model);
         }
 
         [HttpPost]
-        public ActionResult Add(Product model)
+        public ActionResult Add(Category model)
         {
-            productRepository.Add(model);
+            genericRepository.Add(model);
             dbContext.SaveChanges();
             return Ok(model);
         }
 
         [HttpPut]
-        public ActionResult Update(Product model)
+        public ActionResult Update(Category model)
         {
-            productRepository.Update(model);
+            genericRepository.Update(model);
             dbContext.SaveChanges();
             return Ok(model);
         }
@@ -53,7 +52,7 @@ namespace Section1.API.Controllers
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-            productRepository.Delete(id);
+            genericRepository.Delete(id);
             dbContext.SaveChanges();
             return Ok();
         }
