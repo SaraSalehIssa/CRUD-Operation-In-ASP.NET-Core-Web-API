@@ -1,6 +1,8 @@
 
 using Microsoft.EntityFrameworkCore;
+using Section1.Core.IRepositories;
 using Section1.Infrastructure.Data;
+using Section1.Infrastructure.Repositories;
 
 namespace Section1
 {
@@ -17,6 +19,8 @@ namespace Section1
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            builder.Services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
