@@ -21,7 +21,9 @@ namespace Section1
             });
 
             builder.Services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
+            builder.Services.AddScoped(typeof(ICategoryRepository), typeof(CategoryRepository));
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

@@ -11,50 +11,48 @@ namespace Section1.API.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly ApplicationDbContext dbContext;
-        private readonly IProductRepository productRepository;
+        private readonly IUnitOfWork<Product> unitOfWork;
 
-        public ProductController(ApplicationDbContext dbContext, IProductRepository productRepository)
+        public ProductController(IUnitOfWork<Product> unitOfWork)
         {
-            this.dbContext = dbContext;
-            this.productRepository = productRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         [HttpGet]
         public ActionResult GetAll()
         {
-            var model = productRepository.GetAll();
+            var model = unitOfWork.productRepository.GetAll();
             return Ok(model);
         }
 
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
-            var model = productRepository.GetById(id);
+            var model = unitOfWork.productRepository.GetById(id);
             return Ok(model);
         }
 
         [HttpPost]
         public ActionResult Add(Product model)
         {
-            productRepository.Add(model);
-            dbContext.SaveChanges();
+            unitOfWork.productRepository.Add(model);
+            unitOfWork.Save();
             return Ok(model);
         }
 
         [HttpPut]
         public ActionResult Update(Product model)
         {
-            productRepository.Update(model);
-            dbContext.SaveChanges();
+            unitOfWork.productRepository.Update(model);
+            unitOfWork.Save();
             return Ok(model);
         }
 
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-            productRepository.Delete(id);
-            dbContext.SaveChanges();
+            unitOfWork.productRepository.Delete(id);
+            unitOfWork.Save();
             return Ok();
         }
     }

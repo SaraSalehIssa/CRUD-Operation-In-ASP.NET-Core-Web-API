@@ -11,32 +11,32 @@ namespace Section1.API.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly IGenericRepository<Category> genericRepository;
+        private readonly IUnitOfWork<Category> unitOfWork;
 
-        public CategoryController(ApplicationDbContext dbContext, IGenericRepository<Category> genericRepository)
+        public CategoryController(ApplicationDbContext dbContext, IUnitOfWork<Category> unitOfWork)
         {
             this.dbContext = dbContext;
-            this.genericRepository = genericRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         [HttpGet]
         public ActionResult GetAll()
         {
-            var model = genericRepository.GetAll();
+            var model = unitOfWork.categoryRepository.GetAll();
             return Ok(model);
         }
 
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
-            var model = genericRepository.GetById(id);
+            var model = unitOfWork.categoryRepository.GetById(id);
             return Ok(model);
         }
 
         [HttpPost]
         public ActionResult Add(Category model)
         {
-            genericRepository.Add(model);
+            unitOfWork.categoryRepository.Add(model);
             dbContext.SaveChanges();
             return Ok(model);
         }
@@ -44,7 +44,7 @@ namespace Section1.API.Controllers
         [HttpPut]
         public ActionResult Update(Category model)
         {
-            genericRepository.Update(model);
+            unitOfWork.categoryRepository.Update(model);
             dbContext.SaveChanges();
             return Ok(model);
         }
@@ -52,7 +52,7 @@ namespace Section1.API.Controllers
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-            genericRepository.Delete(id);
+            unitOfWork.categoryRepository.Delete(id);
             dbContext.SaveChanges();
             return Ok();
         }
