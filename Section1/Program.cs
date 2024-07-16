@@ -1,5 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
+using Section1.API.mapping_profiles;
 using Section1.Core.IRepositories;
 using Section1.Infrastructure.Data;
 using Section1.Infrastructure.Repositories;
@@ -24,6 +25,7 @@ namespace Section1
             builder.Services.AddScoped(typeof(ICategoryRepository), typeof(CategoryRepository));
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
