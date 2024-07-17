@@ -10,8 +10,8 @@ namespace Section1.Core.IRepositories
     public interface IGenericRepository<T> where T: class
     {
         public Task<IEnumerable<T>> GetAll();
-        public T GetById(int id);
-        public void Add(T model);
+        public Task<T> GetById(int id);
+        public Task Add(T model);
         public void Update(T model);
         public void Delete(int id);
     }

@@ -20,15 +20,14 @@ namespace Section1.Infrastructure.Repositories
             this.dbContext = dbContext;
         }
 
-        public void Add(T model)
+        public async Task Add(T model)
         {
-            dbContext.Set<T>().Add(model);
+            await dbContext.Set<T>().AddAsync(model);
         }
 
         public void Delete(int id)
         {
-            var model = dbContext.Set<T>().Find(id);
-            dbContext.Set<T>().Remove(model);
+            dbContext.Remove(id);
         }
 
         public async Task<IEnumerable<T>> GetAll()
@@ -41,9 +40,9 @@ namespace Section1.Infrastructure.Repositories
             return await dbContext.Set<T>().ToListAsync();
         }
 
-        public T GetById(int id)
+        public async Task<T> GetById(int id)
         {
-            return dbContext.Set<T>().Find(id);
+            return await dbContext.Set<T>().FindAsync(id);
         }
 
         public void Update(T model)

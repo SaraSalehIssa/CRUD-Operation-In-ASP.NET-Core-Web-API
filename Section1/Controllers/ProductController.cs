@@ -48,16 +48,16 @@ namespace Section1.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult GetById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
-            var model = unitOfWork.productRepository.GetById(id);
+            var model = await unitOfWork.productRepository.GetById(id);
             return Ok(model);
         }
 
         [HttpPost]
-        public ActionResult Add(Product model)
+        public async Task<ActionResult> Add(Product model)
         {
-            unitOfWork.productRepository.Add(model);
+            await unitOfWork.productRepository.Add(model);
             unitOfWork.Save();
             return Ok(model);
         }
