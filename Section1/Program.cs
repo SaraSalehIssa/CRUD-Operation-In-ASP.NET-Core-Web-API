@@ -18,7 +18,7 @@ namespace Section1
             builder.Services.AddControllers();
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")).UseLazyLoadingProxies();
             });
 
             builder.Services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));

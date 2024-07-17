@@ -12,7 +12,7 @@ namespace Section1.Core.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         // Using HashSet to get unique data only without repetition
-        public ICollection<Product> Products { get; set; } = new HashSet<Product>();
+        public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
 
     }
 }

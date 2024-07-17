@@ -42,6 +42,10 @@ namespace Section1.Infrastructure.Repositories
 
 
             // ************ Lazy Loading ************
+            
+            var products = await dbContext.Products.Where(c => c.CategoryId == CategoryId).ToListAsync();
+            return products;
+            
 
         }
     }

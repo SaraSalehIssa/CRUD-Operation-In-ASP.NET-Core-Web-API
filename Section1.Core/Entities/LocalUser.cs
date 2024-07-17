@@ -16,6 +16,6 @@ namespace Section1.Core.Entities
         public string Role { get; set; }
 
         // Using HashSet to get unique data only without repetition
-        public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
+        public virtual ICollection<Order> Orders { get; set; } = new HashSet<Order>();
     }
 }

@@ -20,7 +20,7 @@ namespace Section1.Infrastructure.Repositories
         public IProductRepository productRepository { get; set; }
         public ICategoryRepository categoryRepository { get; set; }
 
-        public int Save() => dbContext.SaveChanges();
+        public async Task<int> Save() => await dbContext.SaveChanges();
         
     }
 }

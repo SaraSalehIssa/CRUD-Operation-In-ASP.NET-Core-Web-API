@@ -20,7 +20,7 @@ namespace Section1.Core.Entities
 
 
         // Using HashSet to get unique data only without repetition
-        public ICollection<OrderDetails> OrderDetails { get; set; } = new HashSet<OrderDetails>();
-        public LocalUser? LocalUser { get; set; }
+        public virtual ICollection<OrderDetails> OrderDetails { get; set; } = new HashSet<OrderDetails>();
+        public virtual LocalUser? LocalUser { get; set; }
     }
 }

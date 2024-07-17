@@ -16,10 +16,10 @@ namespace Section1.Core.Entities
 
         [ForeignKey(nameof(Category))]
         public int CategoryId { get; set; }
-        public Category? Category { get; set; }
+        public virtual Category? Category { get; set; }
 
         // Using HashSet to get unique data only without repetition
-        public ICollection<OrderDetails> OrderDetails { get; set; } = new HashSet<OrderDetails>();
+        public virtual ICollection<OrderDetails> OrderDetails { get; set; } = new HashSet<OrderDetails>();
 
     }
 }

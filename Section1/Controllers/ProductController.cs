@@ -2,6 +2,7 @@
 using Azure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Section1.API.mapping_profiles;
 using Section1.Core.Entities;
 using Section1.Core.Entities.DTO;
 using Section1.Core.IRepositories;
@@ -17,9 +18,10 @@ namespace Section1.API.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IUnitOfWork<Product> unitOfWork;
+        private readonly IMapper mapper;
         public ApiResponse response;
 
-        public ProductController(IUnitOfWork<Product> unitOfWork)
+        public ProductController(IUnitOfWork<Product> unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
@@ -58,30 +60,30 @@ namespace Section1.API.Controllers
         public async Task<ActionResult> Add(Product model)
         {
             await unitOfWork.productRepository.Add(model);
-            unitOfWork.Save();
+            await unitOfWork.Save();
             return Ok(model);
         }
 
         [HttpPut]
-        public ActionResult Update(Product model)
+        public async Task<ActionResult> Update(Product model)
         {
             unitOfWork.productRepository.Update(model);
-            unitOfWork.Save();
+            await unitOfWork.Save();
             return Ok(model);
         }
 
         [HttpDelete]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             unitOfWork.productRepository.Delete(id);
-            unitOfWork.Save();
+            await unitOfWork.Save();
             return Ok();
         }
 
-        [HttpGet("Products/{CategoryId}")]
+        [HttpGet("Product/{CategoryId}")]
         public async Task<ActionResult<ApiResponse>> GetProductByCategoryId(int CategoryId)
         {
-            var products = unitOfWork.productRepository.GetAllProductsByCategoryId(CategoryId);
+            var products = await unitOfWork.productRepository.GetAllProductsByCategoryId(CategoryId);
             var mappedProducts = mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(products);
             return Ok(mappedProducts);
         }

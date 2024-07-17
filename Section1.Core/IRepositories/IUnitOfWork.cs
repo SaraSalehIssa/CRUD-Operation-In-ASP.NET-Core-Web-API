@@ -11,6 +11,6 @@ namespace Section1.Core.IRepositories
         public IProductRepository productRepository { get; set; }
         public ICategoryRepository categoryRepository { get; set; }
 
-        public int Save();
+        public Task<int> Save();
     }
 }
