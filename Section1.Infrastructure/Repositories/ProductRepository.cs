@@ -22,9 +22,19 @@ namespace Section1.Infrastructure.Repositories
         public async Task<IEnumerable<Product>> GetAllProductsByCategoryId(int CategoryId)
         {
             // Eager Loading
+            /*
             var products = await dbContext.Products.Include(x => x.Category)
                 .Where(c => c.CategoryId == CategoryId)
                 .ToListAsync();
+            return products;
+            */
+
+            // Explicit Loading
+            var products = await dbContext.Products.Where(c => c.CategoryId == CategoryId).ToListAsync();
+            foreach (var product in products)
+            {
+                await dbContext.Entry(product).Reference(r => r.Category).LoadAsync();
+            }
             return products;
         }
     }
