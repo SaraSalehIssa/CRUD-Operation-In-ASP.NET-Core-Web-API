@@ -22,6 +22,7 @@ namespace Section1.Infrastructure.Repositories
         public async Task<IEnumerable<Product>> GetAllProductsByCategoryId(int CategoryId)
         {
             // ************  Eager Loading   ************
+            // 1 Request
             /*
             var products = await dbContext.Products.Include(x => x.Category)
                 .Where(c => c.CategoryId == CategoryId)
@@ -31,6 +32,9 @@ namespace Section1.Infrastructure.Repositories
 
 
             // ************  Explicit Loading    ************
+            // 2 Requests: 
+            //      1. Original Data
+            //      2. Related Data
             /*
             var products = await dbContext.Products.Where(c => c.CategoryId == CategoryId).ToListAsync();
             foreach (var product in products)
@@ -42,7 +46,7 @@ namespace Section1.Infrastructure.Repositories
 
 
             // ************ Lazy Loading ************
-            
+
             var products = await dbContext.Products.Where(c => c.CategoryId == CategoryId).ToListAsync();
             return products;
             
