@@ -17,6 +17,7 @@ namespace Section1.API.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IUnitOfWork<Product> unitOfWork;
+        public ApiResponse response;
 
         public ProductController(IUnitOfWork<Product> unitOfWork)
         {
@@ -35,13 +36,13 @@ namespace Section1.API.Controllers
                 response.StatusCode = System.Net.HttpStatusCode.OK;
                 response.IsSuccess = check;
                 var mappedProducts = mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(model);
-                response.result = mappedProducts;
+                response.Result = mappedProducts;
             }
             else
             {
-                response.ErrorMessage = "This Product not found!";
+                response.ErrorMessages = "Products not found!";
                 response.StatusCode = System.Net.HttpStatusCode.OK;
-                response.IsSuccess = false;
+                response.IsSuccess = check;
             }
             return response;
         }
