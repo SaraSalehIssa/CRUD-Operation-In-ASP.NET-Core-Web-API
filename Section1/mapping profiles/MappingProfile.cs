@@ -9,7 +9,7 @@ namespace Section1.API.mapping_profiles
         public MappingProfile()
         {
             CreateMap<Product, ProductDTO>().
-                ForMember(To => To.Category_Name, from => from.MapFrom(x => x.Category != null? x.Category.Name: null));
+                ForMember(To => To.Category_Name, From => From.MapFrom(x => x.Category != null ? x.Category.Name: null));
         }
     }
 }

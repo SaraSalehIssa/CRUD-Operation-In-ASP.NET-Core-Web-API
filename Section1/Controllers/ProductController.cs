@@ -1,9 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Azure;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Section1.Core.Entities;
+using Section1.Core.Entities.DTO;
 using Section1.Core.IRepositories;
 using Section1.Infrastructure.Data;
 using Section1.Infrastructure.Repositories;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Section1.API.Controllers
 {
@@ -16,13 +21,29 @@ namespace Section1.API.Controllers
         public ProductController(IUnitOfWork<Product> unitOfWork)
         {
             this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
+            response = new ApiResponse();
         }
 
         [HttpGet]
-        public ActionResult GetAll()
+        public async Task<ActionResult<ApiResponse>> GetAll()
         {
-            var model = unitOfWork.productRepository.GetAll();
-            return Ok(model);
+            var model = await unitOfWork.productRepository.GetAll();
+            var check = model.Any();
+            if (check)
+            {
+                response.StatusCode = System.Net.HttpStatusCode.OK;
+                response.IsSuccess = check;
+                var mappedProducts = mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(model);
+                response.result = mappedProducts;
+            }
+            else
+            {
+                response.ErrorMessage = "This Product not found!";
+                response.StatusCode = System.Net.HttpStatusCode.OK;
+                response.IsSuccess = false;
+            }
+            return response;
         }
 
         [HttpGet("{id}")]
@@ -54,6 +75,14 @@ namespace Section1.API.Controllers
             unitOfWork.productRepository.Delete(id);
             unitOfWork.Save();
             return Ok();
+        }
+
+        [HttpGet("Products/{CategoryId}")]
+        public async Task<ActionResult<ApiResponse>> GetProductByCategoryId(int CategoryId)
+        {
+            var products = unitOfWork.productRepository.GetAllProductsByCategoryId(CategoryId);
+            var mappedProducts = mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(products);
+            return Ok(mappedProducts);
         }
     }
 }

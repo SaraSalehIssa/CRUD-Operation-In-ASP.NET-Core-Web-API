@@ -9,6 +9,6 @@ namespace Section1.Core.IRepositories
 {
     public interface IProductRepository: IGenericRepository<Product>
     {
-        public void GetProductsFilter();
+        public Task<IEnumerable<Product>> GetAllProductsByCategoryId(int CategoryId);
     }
 }

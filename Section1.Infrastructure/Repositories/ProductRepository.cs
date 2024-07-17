@@ -19,9 +19,13 @@ namespace Section1.Infrastructure.Repositories
             this.dbContext = dbContext;
         }
 
-        public void GetProductsFilter()
+        public async Task<IEnumerable<Product>> GetAllProductsByCategoryId(int CategoryId)
         {
-            throw new NotImplementedException();
+            // Eager Loading
+            var products = await dbContext.Products.Include(x => x.Category)
+                .Where(c => c.CategoryId == CategoryId)
+                .ToListAsync();
+            return products;
         }
     }
 }

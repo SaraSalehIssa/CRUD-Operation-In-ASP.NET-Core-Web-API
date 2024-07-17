@@ -1,7 +1,9 @@
-﻿using Section1.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Section1.Core.Entities;
 using Section1.Core.IRepositories;
 using Section1.Infrastructure.Data;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,10 +31,14 @@ namespace Section1.Infrastructure.Repositories
             dbContext.Set<T>().Remove(model);
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
-            var products = dbContext.Set<T>().ToList();
-            return products;
+            if(typeof(T) == typeof(Product))
+            {
+                var model = await dbContext.Products.Include(x => x.Category).ToListAsync();
+                return (IEnumerable<T>)model;
+            }
+            return await dbContext.Set<T>().ToListAsync();
         }
 
         public T GetById(int id)
