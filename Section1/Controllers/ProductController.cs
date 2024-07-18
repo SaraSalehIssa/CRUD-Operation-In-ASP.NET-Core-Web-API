@@ -29,9 +29,9 @@ namespace Section1.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ApiResponse>> GetAll()
+        public async Task<ActionResult<ApiResponse>> GetAllProducts(int pageSize = 2, int pageNumber = 1)
         {
-            var model = await unitOfWork.productRepository.GetAll();
+            var model = await unitOfWork.productRepository.GetAll(page_size : pageSize, page_number : pageNumber);
             var check = model.Any();
             if (check)
             {

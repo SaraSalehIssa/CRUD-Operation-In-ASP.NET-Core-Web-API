@@ -9,7 +9,7 @@ namespace Section1.Core.IRepositories
 {
     public interface IGenericRepository<T> where T: class
     {
-        public Task<IEnumerable<T>> GetAll();
+        public Task<IEnumerable<T>> GetAll(int page_size = 2, int page_number = 1);
         public Task<T> GetById(int id);
         public Task Add(T model);
         public void Update(T model);

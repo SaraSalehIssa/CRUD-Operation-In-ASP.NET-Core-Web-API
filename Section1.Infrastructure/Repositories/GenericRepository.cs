@@ -30,14 +30,26 @@ namespace Section1.Infrastructure.Repositories
             dbContext.Remove(id);
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public async Task<IEnumerable<T>> GetAll(int page_size = 2, int page_number = 1)
         {
+            /*
             if(typeof(T) == typeof(Product))
             {
                 var model = await dbContext.Products.Include(x => x.Category).ToListAsync();
                 return (IEnumerable<T>)model;
             }
-            return await dbContext.Set<T>().ToListAsync();
+            */
+
+            IQueryable<T> query = dbContext.Set<T>();
+            if(page_size > 0)
+            {
+                if(page_size > 4)
+                {
+                    page_size = 4;
+                }
+                query = query.Skip(page_size * (page_number - 1)).Take(page_size);
+            }
+            return await query.ToListAsync();
         }
 
         public async Task<T> GetById(int id)
